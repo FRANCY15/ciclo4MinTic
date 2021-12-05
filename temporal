@@ -1,0 +1,56 @@
+const usuarioSchema = mongoose.Schema({
+    nombre: String,
+    identificacion: Number,
+    email: String,
+    clave: String,
+    estado: String,
+    perfil: String
+}, {versionKey:false})
+
+const UsuarioModel = mongoose.model('usuarios', usuarioSchema)
+
+//mostrar
+
+const mostrar = async ()=> {
+    const  usuarios = await UsuarioModel.find()
+    console.log(usuarios)
+}
+//mostrar()
+
+const crear = async ()=>{
+    const usuario = new UsuarioModel({
+        nombre: "Milena",
+        identificacion:456,
+        email: "fedjdsfao@hotmail.com",
+        clave: "123",
+        estado: "pendiente",
+        perfil: "Estudiante"
+    })
+    const resultado = await usuario.save ()
+    console.log (resultado)
+}
+
+const actualizar = async (id)=>{
+    const usuario = await UsuarioModel ({_id: id},
+    {
+        $set: {
+            nombre: 'Julio',
+            identificacion:856,
+            email: "ico@hotmail.com",
+            clave: "258",
+            estado: "autorizado",
+            perfil: "profesor"
+
+        }
+    })
+}
+
+const eliminar = async (id)=>{
+    const usuario = await UsuarioModel.deleteOne({_id:id})
+    console.log(usuario)
+}
+
+//eliminar ('61942a41532b1a7df4980a81')
+//crear()
+//mostrar()
+//actualizar('61942a41532b1a7df4980a81')
